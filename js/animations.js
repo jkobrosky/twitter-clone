@@ -1,7 +1,9 @@
 $(document).ready(function() {
 
 	// Hide the tweet-controls - tweet button and character count.
-	$('#tweet-controls').hide();	
+	$('#tweet-controls').hide();
+	$('.stats').hide();
+	$('.tweet-actions').hide();
 	
 
 	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
@@ -18,14 +20,25 @@ $(document).ready(function() {
 			return null;
 		} else {
 			$(this).css({ 'height' : '2.5em' });
-			$('#tweet-controls').hide();
+			$('#tweet-controls').toggle().hide();
 		}
 
 	});
 
+	// When user clicks on the Tweet button it console logs sent tweet!
 	$('#tweet-submit').on('click', function() {
-		console.log('sent tweet!');
-	})
+		var tweet = $('.tweet-compose').val();
+		// var myName = $('<span>Joseph Kobrosky</span>');
+		// var avatar = $('<img src=./img/alogoon.jpg />');
+		console.log(tweet);
+		$('#stream').prepend('<p>' + tweet + '</p>');
+		
+		// Cleans up the compose box and collapses everything.
+		$('.tweet-compose').val('');
+		$('.tweet-compose').css({ 'height' : '2.5em' });
+		$('#tweet-controls').hide();		
+
+	});
 
 	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
 	$('div.reply .tweet-compose').on('click', function() {
@@ -43,6 +56,20 @@ $(document).ready(function() {
 	$('.tweet-compose').on('keyup', function() {
 		charCounter();
 	});
+
+	// When the user hovers over a tweet the tweet-actions icons will appear.
+	$('.tweet-text').on('mouseover', function() {
+		$('.tweet-actions').show();
+		$('.tweet-text').on('mouseout', function() {
+			$('tweet-actions').hide();
+		});
+	});
+
+	// When user clicks on a tweet it slides down to reveal the 'stats.'
+	$('.tweet-text').on('click', function() {
+		console.log('tweet-text clicked')
+		$(this).show('.stats');
+	})
 
 
 	var charCounter = function() {
