@@ -89,12 +89,12 @@ body {
 	width: 302px;
 }
 	/* Profile */
-	#profile-summary, #tweet-content {
+	#profile-summary, #tweet-content, .profile-tweet {
 		padding: 12px;
 	}
 		#profile-summary .avatar {
 			position: absolute;
-			top: 0;.twe
+			top: 0;
 			left: 0;
 		}
 		#profile-summary .content {

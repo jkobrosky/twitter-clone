@@ -3,7 +3,10 @@ $(document).ready(function() {
 	// Hide the tweet-controls - tweet button and character count.
 	$('#tweet-controls').hide();
 	$('.stats').hide();
+	$('.reply').hide();
 	$('.tweet-actions').hide();
+
+	$('.user-name').append('&emsp;@jkobrosky');
 	
 
 	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
@@ -28,17 +31,29 @@ $(document).ready(function() {
 	// When user clicks on the Tweet button it console logs sent tweet!
 	$('#tweet-submit').on('click', function() {
 		var tweet = $('.tweet-compose').val();
-		// var myName = $('<span>Joseph Kobrosky</span>');
-		// var avatar = $('<img src=./img/alogoon.jpg />');
 		console.log(tweet);
-		$('#stream').prepend('<p>' + tweet + '</p>');
-		
+
+		//ex. $(target).after(content to be inserted);
 		// Cleans up the compose box and collapses everything.
 		$('.tweet-compose').val('');
 		$('.tweet-compose').css({ 'height' : '2.5em' });
 		$('#tweet-controls').hide();		
 
 	});
+
+	$('.tweet').on('click', function() {
+		$(this).find('.stats').slideToggle();
+		$(this).find('.reply').slideToggle();
+	})
+
+	// When hovering over a tweet it will expand and show the tweet actions.
+	// .hover(handlerIn, handlerOut);
+	$('.tweet').hover(function() {
+		$(this).find('.tweet-actions').show();
+	}, function() {
+		$(this).find('.tweet-actions').hide();
+	});
+
 
 	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
 	$('div.reply .tweet-compose').on('click', function() {
@@ -56,20 +71,6 @@ $(document).ready(function() {
 	$('.tweet-compose').on('keyup', function() {
 		charCounter();
 	});
-
-	// When the user hovers over a tweet the tweet-actions icons will appear.
-	$('.tweet-text').on('mouseover', function() {
-		$('.tweet-actions').show();
-		$('.tweet-text').on('mouseout', function() {
-			$('tweet-actions').hide();
-		});
-	});
-
-	// When user clicks on a tweet it slides down to reveal the 'stats.'
-	$('.tweet-text').on('click', function() {
-		console.log('tweet-text clicked')
-		$(this).show('.stats');
-	})
 
 
 	var charCounter = function() {
