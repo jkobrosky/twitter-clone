@@ -1,80 +1,79 @@
 $(document).ready(function() {
 
-	/* When clicking the tweet-compose box (top left side of screen) the box increases in height and displays the char-count and tweet button.
-	*/
+	// Hide the tweet-controls - tweet button and character count.
+	$('#tweet-controls').hide();	
+	
+
+	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
 	$('#tweet-content .tweet-compose').on('click', function() {
-		$('#char-count, #tweet-submit').css({
-  		'display': 'inline',
-		});
-
-		// When the user leaves the compose area it hides the char count and the tweet button.
-		$('.tweet-compose').blur(function() {
-			var contentChecker = $('.tweet-compose').val();
-			if (contentChecker) {
-				$('.tweet-compose').
-			}
-			$('#char-count, #tweet-submit').css({ 'display' : 'none' });
-		});
-
-		// This increase the height of the box clicked and when the mouse leaves the box it shrinks back to normal size.
-		$(this).css({ 'height' : '5em' }).blur(function() {
-			$(this).css({ 'height' : '2.5em' });
-		});
-
+		charCounter();
+		$('#tweet-controls').show();
+		$(this).css({ 'height' : '5em' });
 	});
 
-	// When a compose tweet box is clicked in on the main content area it increases the compose area.
-	$('.tweet-compose').on('click', function() {
-		$(this).css({ 'height' : '5em' }).blur(function() {
-			$(this).css({ 'height' : '2.5em' });
-		});
-	});
-
-	// Word count for composing a tweet. At less then 10 char left it goes red, after 0 is highlights the text red while showing a red negative number.
-	$('.tweet-compose').on('keyup', function() {
-		var maxCount = 140;
-		var wordCount = $('.tweet-compose').val().length;
-
-
-		// Tracks the word count of the user and warns them as they get close to the max limit.
-		if (maxCount - wordCount > 10) {
-			$('#char-count').text(maxCount - wordCount)
-			.css({ 'color' : '#000' });
-		} else if (maxCount - wordCount <= 10) {
-			$('#char-count').text(maxCount - wordCount)
-			.css({ 'color' : 'red' });
-		} else if (maxCount - wordCount <= 0) {
-			$('#char-count').text(maxCount - wordCount)
-			.css({ 'color' : '#fff', 'background-color' : 'red' });
-		}
-	});
-
-	// Submit button - checks to see if the user entered too many characters, if not submit tweet.
-	$('#submit-tweet').on('click', function(e) {
-		e.preventDefault();
-		if (wordCount > 140) {
-			$('tweet-compose').css({ 'background' : 'red' });
+	// When the user clicks in the tweet-compose box the box expands. When the user clicks away it contracts.
+	$('.tweet-compose').blur(function() {
+		console.log('blur');
+		if (charCounter() !== 140) {
+			return null;
 		} else {
-			$('tweet-compose').css({ 'background' : '#fff' })
+			$(this).css({ 'height' : '2.5em' });
+			$('#tweet-controls').hide();
 		}
+
+	});
+
+	$('#tweet-submit').on('click', function() {
+		console.log('sent tweet!');
 	})
 
+	// When clicking in the tweet compose area the tweet controls show up and the box doubles in height.
+	$('div.reply .tweet-compose').on('click', function() {
+		$(this).css({ 'height' : '5em' });
+	});
+
+	// When the user clicks in the tweet-compose box the box expands. When the user clicks away it contracts.
+	$('div.reply .tweet-compose').blur(function() {
+		// Need an if statement to cancel blur if trying to click tweet button.
+		$(this).css({ 'height' : '2.5em' });
+	});
+
+	// When user clicks in the compose tweet box and starts typing the character counter function is called.
+
+	$('.tweet-compose').on('keyup', function() {
+		charCounter();
+	});
 
 
+	var charCounter = function() {
+		var maxCount = 140;
+		var wordCount = $('.tweet-compose').val().length;
+		var difference = maxCount - wordCount;
+		
+		if (difference === 140) {
+			$('#tweet-submit').prop('disabled', true);
+		} else if (difference >= 11) {
+			$('#char-count').text(difference)
+			.css({ 'color' : '#000' });
+			$('#tweet-submit').prop('disabled', false);
+		} else if (difference >= 0) {
+			$('#char-count').text(difference)
+			.css({ 'color' : 'red' });
+			$('#tweet-submit').prop('disabled', false);
+		} else {
+			$('#char-count').text(difference)
+			.css({ 'color' : 'red' });
+			$('#tweet-submit').prop('disabled', true);
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		return difference;
+	};
 
 });
+
+
+
+
+
+
+

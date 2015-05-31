@@ -1,11 +1,8 @@
 /*
-
 Things to remember:
-
 1. Always use proper indentation in your css and html
 2. An "#" selector or 'id' will override a '.' selector or 'class'
 3. A '.' selector will override a native selector, like 'div'
-
 */
 
 
@@ -131,15 +128,12 @@ body {
 			text-align: right;
 		}
 			#tweet-controls div {
-				display: none;
+				display: inline-block;
 			}
 			#char-count {
 				font-size: 14px;
 				color: #999;
 				text-shadow: 0 1px 1px rgba(255,255,255,.75);
-			}
-			#tweet-submit {
-				display: none;
 			}
 
 /* TWEET */
@@ -256,9 +250,9 @@ body {
 			clear: both;
 			padding-left: 43px;
 		}
-		.reply .avatar {
-			position: absolute;
-			top: 0;
-			left: 0;
-		}
+			.reply .avatar {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
 
