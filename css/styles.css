@@ -89,7 +89,7 @@ body {
 	width: 302px;
 }
 	/* Profile */
-	#profile-summary, #tweet-content, .profile-tweet {
+	#profile-summary, #tweet-content {
 		padding: 12px;
 	}
 		#profile-summary .avatar {
@@ -144,6 +144,15 @@ body {
 	min-height: 60px;
 	border-radius: 6px;
 }
+	.fa {
+		margin-bottom: 2px;
+	}
+	.fa-retweet {
+		color: #77b255;
+	}
+	.fa-star {
+		color: #ffac33;
+	}
 
 	.tweet .avatar {
 		float: left;
